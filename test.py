@@ -5,8 +5,8 @@ import streamlit as st
 from babel.numbers import format_currency
 sns.set(style='dark')
 
-day_df = pd.read_csv(r"C:\Users\Lenovo\Documents\Python Scripts\day_data.csv")
-hour_df = pd.read_csv(r"C:\Users\Lenovo\Documents\Python Scripts\hour_data.csv")
+day_df = pd.read_csv(r"day_data.csv")
+hour_df = pd.read_csv(r"hour_data.csv")
 
 st.title('Bike Sharing Analysis')
 
