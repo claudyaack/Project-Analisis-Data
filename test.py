@@ -125,11 +125,11 @@ with tab4 :
     filtered_season_df = hour_df[hour_df['season_category'] == selected_season]
 
     # Kelompokkan data berdasarkan jam dan hitung rata-rata penyewaan
-    avg_by_hour = filtered_season_df.groupby('hr')['cnt'].mean()
+    avg_by_hour_season = filtered_season_df.groupby('hr')['cnt'].mean()
 
     # Buat plot menggunakan Seaborn
     plt.figure(figsize=(12, 5))
-    sns.lineplot(x=avg_by_hour.index, y=avg_by_hour.values, marker='o')
+    sns.lineplot(x=avg_by_hour_season.index, y=avg_by_hour_season.values, marker='o')
     plt.xlabel('Jam')
     plt.ylabel('Rata-rata Banyak Penyewaan per Jam')
     plt.title(f'Rata-rata Banyak Penyewaan Sepeda per Jam pada {selected_season} (2011-2012)')
@@ -177,11 +177,11 @@ with tab4 :
     filtered_weather_df = hour_df[hour_df['weather_category'] == selected_weather]
 
     # Kelompokkan data berdasarkan jam dan hitung rata-rata penyewaan
-    avg_by_hour = filtered_weather_df.groupby('hr')['cnt'].mean()
+    avg_by_hour_weather = filtered_weather_df.groupby('hr')['cnt'].mean()
 
     # Buat plot menggunakan Seaborn
     plt.figure(figsize=(12, 5))
-    sns.lineplot(x=avg_by_hour.index, y=avg_by_hour.values, marker='o')
+    sns.lineplot(x=avg_by_hour_weather.index, y=avg_by_hour_weather.values, marker='o')
     plt.xlabel('Jam')
     plt.ylabel('Rata-rata Banyak Penyewaan per Jam')
     plt.title(f'Rata-rata Banyak Penyewaan Sepeda per Jam pada Cuaca {selected_weather} (2011-2012)')
@@ -191,8 +191,8 @@ with tab4 :
     st.pyplot(plt)
 
     st.subheader("Perbandingan Rata-rata Penyewaan per Jam Berdasarkan Kategori Cuaca (2011-2012)")
-    # Membuat kolom 'season_category' untuk kategori musim
-    hour_df['weather_category'] = pd.cut(hour_df['weather'], bins=[0, 1, 2, 3, 4], labels=['Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal'])
+    # Membuat kolom 'weather_category' untuk kategori cuaca
+    hour_df['weather_category'] = pd.cut(hour_df['weathersit'], bins=[0, 1, 2, 3, 4], labels=['Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal'])
 
     # Membuat dropdown (selectbox) untuk memilih jam
     selected_hour3 = st.selectbox('Pilih  Jam :', range(24))  # Opsi jam dari 0 hingga 23
@@ -200,7 +200,7 @@ with tab4 :
     # Filter data untuk jam yang dipilih
     filtered_hour_df = hour_df[hour_df['hr'] == selected_hour3]
 
-    # Kelompokkan data berdasarkan kategori cuaca dan hitung rata-rata penyewaan pada jam yang dipilih
+    # Kelompokkan data berdasarkan kategori musim dan hitung rata-rata penyewaan pada jam yang dipilih
     avg_by_weather = filtered_hour_df.groupby('weather_category')['cnt'].mean()
 
     # Buat plot menggunakan Seaborn
