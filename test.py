@@ -167,13 +167,13 @@ with tab4 :
 
     st.subheader("Tren Rata-rata Penyewaan per Jam Berdasarkan Kategori Cuaca (2011-2012)")
     # Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal'
-    # Membuat dropdown (selectbox) untuk memilih kategori musim
+    # Membuat dropdown (selectbox) untuk memilih kategori cuaca
     selected_weather = st.selectbox(
         'Pilih Cuaca:',
         ['Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal']
     )
 
-    # Filter data berdasarkan kategori musim yang dipilih
+    # Filter data berdasarkan kategori cuaca yang dipilih
     filtered_weather_df = hour_df[hour_df['weather_category'] == selected_weather]
 
     # Kelompokkan data berdasarkan jam dan hitung rata-rata penyewaan
@@ -192,7 +192,7 @@ with tab4 :
 
     st.subheader("Perbandingan Rata-rata Penyewaan per Jam Berdasarkan Kategori Cuaca (2011-2012)")
     # Membuat kolom 'season_category' untuk kategori musim
-    hour_df['season_category'] = pd.cut(hour_df['season'], bins=[0, 1, 2, 3, 4], labels=['Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal'])
+    hour_df['weather_category'] = pd.cut(hour_df['weather'], bins=[0, 1, 2, 3, 4], labels=['Cerah/Sedikit Berawan', 'Berkabut/Berawan', 'Salju Ringan/Hujan Ringan', 'Hujan Berat/Salju Tebal'])
 
     # Membuat dropdown (selectbox) untuk memilih jam
     selected_hour3 = st.selectbox('Pilih  Jam :', range(24))  # Opsi jam dari 0 hingga 23
@@ -200,13 +200,13 @@ with tab4 :
     # Filter data untuk jam yang dipilih
     filtered_hour_df = hour_df[hour_df['hr'] == selected_hour3]
 
-    # Kelompokkan data berdasarkan kategori musim dan hitung rata-rata penyewaan pada jam yang dipilih
+    # Kelompokkan data berdasarkan kategori cuaca dan hitung rata-rata penyewaan pada jam yang dipilih
     avg_by_weather = filtered_hour_df.groupby('weather_category')['cnt'].mean()
 
     # Buat plot menggunakan Seaborn
     plt.figure(figsize=(12, 5))
     sns.barplot(x=avg_by_weather.index, y=avg_by_weather.values)
-    plt.xlabel('Musim')
+    plt.xlabel('Cuaca')
     plt.ylabel('Rata-rata Banyak Penyewaan per Jam')
     plt.title(f'Rata-rata Banyak Penyewaan Sepeda pada Jam {selected_hour3} Berdasarkan Kategori Cuaca (2011-2012)')
     
